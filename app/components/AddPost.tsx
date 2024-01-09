@@ -1,31 +1,59 @@
 'use client'
 //import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
-import axios from "axios"
+import axios, { AxiosError } from "axios"
 import {useMutation, useQueryClient} from '@tanstack/react-query'
+import toast from "react-hot-toast"
 
 export default function CreatePost(){
-    const[title,setTitle] = useState("")
-    const[isDisabled, setIsDisabled] = useState(false)
+    const[title,setTitle] = useState("");
+    const[isDisabled, setIsDisabled] = useState(false);
+    let toastPostId: string;
 
     //create a post
     // const { mutate } = useMutation(
     //     async (title: void) =>await axios.post("/api/posts/addPost", {title})
     // )
 
-    const mutationFunction = async ()=>{
-        const response = await axios.post("/api/posts/addPost", {title})
-        return response
+    const mutationFunction = async (): Promise<void> =>{
+        try{
+            const response = await axios.post("/api/posts/addPost", {title});
+            setTitle('')
+            setIsDisabled(false)
+            toast.dismiss(toastPostId)
+            toast.success('Post has been made',{id: toastPostId})
+            //return response
+        } catch (error:any) {
+            console.error(error);
+            toast.dismiss(toastPostId)
+            toast.error(error?.response?.data.message, {id: toastPostId})
+            setIsDisabled(false)
+            throw error;
+        }
     }
 
-    const { mutate } = useMutation({mutationFn: mutationFunction});
+        const { mutate } = useMutation({mutationFn: mutationFunction});
+    // const { mutate } = useMutation({mutationFn: mutationFunction,
+    //                     onSuccess: ()=>{
+    //                         toast.success('Post created!', {id:toastPostId})
+    //                     },
+    //                     onError:(error)=>{
+    //                         if (error instanceof AxiosError)
+    //                         toast.error(error?.response?.data.message,{id:toastPostId})
+    //                         console.log('this first?')
+    //                     }});
 
     const submitPost = async (e:React.FormEvent) => {
         e.preventDefault()
+        toastPostId = toast.loading('Creating Post', {id:toastPostId})
         setIsDisabled(true)
         mutate()
         console.log('something happened')
+        return
     }
+
+    
+
     return(
         <form onSubmit={submitPost} className="bg-white my-8 p-8 rounded-md">
             <div className="flex flex-col my-4">
