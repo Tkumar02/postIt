@@ -8,6 +8,7 @@ import toast from "react-hot-toast"
 export default function CreatePost(){
     const[title,setTitle] = useState("");
     const[isDisabled, setIsDisabled] = useState(false);
+    const queryClient = useQueryClient()
     let toastPostId: string;
 
     //create a post
@@ -22,6 +23,8 @@ export default function CreatePost(){
             setIsDisabled(false)
             toast.dismiss(toastPostId)
             toast.success('Post has been made',{id: toastPostId})
+            queryClient.invalidateQueries()
+            //the following works as well, but for some reason shows an error - queryClient.invalidateQueries(['posts'])
             //return response
         } catch (error:any) {
             console.error(error);
@@ -32,10 +35,10 @@ export default function CreatePost(){
         }
     }
 
-        const { mutate } = useMutation({mutationFn: mutationFunction});
+    const { mutate } = useMutation({mutationFn: mutationFunction});
     // const { mutate } = useMutation({mutationFn: mutationFunction,
     //                     onSuccess: ()=>{
-    //                         toast.success('Post created!', {id:toastPostId})
+    //                         toast.success('Post created!', {id:toastPostId})        
     //                     },
     //                     onError:(error)=>{
     //                         if (error instanceof AxiosError)
@@ -48,7 +51,6 @@ export default function CreatePost(){
         toastPostId = toast.loading('Creating Post', {id:toastPostId})
         setIsDisabled(true)
         mutate()
-        console.log('something happened')
         return
     }
 

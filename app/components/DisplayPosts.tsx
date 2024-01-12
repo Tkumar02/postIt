@@ -1,8 +1,9 @@
 'use client'
 import Image from "next/image"
 import Link from "next/link"
+import { AddComment } from "./AddComment"
 
-export default function DisplayPosts({name, title, avatar}){
+export default function DisplayPosts({name, title, avatar,id,comments}){
     return(
         <div className="bg-white my-8 p-8 rounded-lg">
             <div className="flex items-center gap-2">
@@ -17,6 +18,11 @@ export default function DisplayPosts({name, title, avatar}){
             </div>
             <div className="my-8">
                 <p className="break-all">{title}</p>
+            </div>
+            <div>
+            <Link href={`/post/${id}`}>
+                    <p className="text-sm font-bold text-gray-700">{comments?.length ? comments>0 : 'Be the first to post a'} Comment</p>
+            </Link>
             </div>
         </div>
     )
