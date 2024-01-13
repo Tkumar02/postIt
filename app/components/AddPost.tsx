@@ -1,7 +1,7 @@
 'use client'
 //import { useMutation } from "@tanstack/react-query"
 import { useState } from "react"
-import axios, { AxiosError } from "axios"
+import axios from "axios"
 import {useMutation, useQueryClient} from '@tanstack/react-query'
 import toast from "react-hot-toast"
 

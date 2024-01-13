@@ -25,11 +25,11 @@ export default async function handler(
 
         try{
             const {comment, postId} = req.body.data
-            if(comment.length > 300){
-                return res.status(403).json({message: 'Your title exceeds 300 characters'})
+            if(comment.length > 100){
+                return res.status(403).json({message: 'Your comment exceeds 100 characters'})
             }
             if(!comment.length){
-                return res.status(403).json({message:'Title cannot be empty'})
+                return res.status(403).json({message:'Comment cannot be empty'})
             }
             const result = await prisma.comment.create({
                 data:{

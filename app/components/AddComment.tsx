@@ -31,6 +31,7 @@ export function AddComment({id}: PostProps){
             setIsDisabled(false)
             toast.dismiss(commentPostToast)
             toast.success('Comment posted successfully',{id:commentPostToast})
+            queryClient.invalidateQueries()
         },
         onError: error=> {
             setIsDisabled(false)
