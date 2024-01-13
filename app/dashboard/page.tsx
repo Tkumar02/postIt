@@ -6,7 +6,7 @@ import MyPosts from "./MyPosts"
 
 export default async function Dashboard() {
     const session = (await getServerSession(authOptions)) as MySession
-    console.log('session', session)
+    //console.log('session', session)
     if(!session){
         redirect('/api/auth/signin')
     }

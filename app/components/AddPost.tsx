@@ -36,16 +36,7 @@ export default function CreatePost(){
     }
 
     const { mutate } = useMutation({mutationFn: mutationFunction});
-    // const { mutate } = useMutation({mutationFn: mutationFunction,
-    //                     onSuccess: ()=>{
-    //                         toast.success('Post created!', {id:toastPostId})        
-    //                     },
-    //                     onError:(error)=>{
-    //                         if (error instanceof AxiosError)
-    //                         toast.error(error?.response?.data.message,{id:toastPostId})
-    //                         console.log('this first?')
-    //                     }});
-
+   
     const submitPost = async (e:React.FormEvent) => {
         e.preventDefault()
         toastPostId = toast.loading('Creating Post', {id:toastPostId})

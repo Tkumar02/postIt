@@ -21,7 +21,7 @@ export default function DisplayPosts({name, title, avatar,id,comments}){
             </div>
             <div>
             <Link href={`/post/${id}`}>
-                    <p className="text-sm font-bold text-gray-700">{comments?.length ? comments>0 : 'Be the first to post a'} Comment</p>
+                    <p className="text-sm font-bold text-gray-700"> {comments?.length > 0 ? `Add a comment (${comments.length} comments)`: 'Be the first to post a Comment'}</p>
             </Link>
             </div>
         </div>

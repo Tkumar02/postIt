@@ -8,7 +8,7 @@ import { MySession } from "../interfaces/Session"
 
 export default async function Nav() {
     const session = (await getServerSession(authOptions)) as MySession
-    console.log(session)
+    //console.log(session,'nav session')
     return(
         <nav className="flex justify-between items-center py-8">
             <Link href={"/"}>

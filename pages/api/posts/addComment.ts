@@ -14,32 +14,33 @@ export default async function handler(
             return res.status(401).json({message:'Please sign in to make a post'})
         }
         
-        const title:string = req.body.title
+        const comment:string = req.body.title
 
         //Get User
         const prismaUser = await prisma.user.findUnique({
             where: {email: session?.user?.email},
         })
 
-        //check title
-        if(title.length > 300){
-            return res.status(403).json({message: 'Your title exceeds 300 characters'})
-        }
-        if(title.length<=0){
-            return res.status(403).json({message:'Title cannot be empty'})
-        }
         //console.log(req.body),'from addPosts.ts'
 
         try{
-            const result = await prisma.post.create({
-                data: {
-                    title,
-                    userId:prismaUser.id,
-                },
+            const {comment, postId} = req.body.data
+            if(comment.length > 300){
+                return res.status(403).json({message: 'Your title exceeds 300 characters'})
+            }
+            if(!comment.length){
+                return res.status(403).json({message:'Title cannot be empty'})
+            }
+            const result = await prisma.comment.create({
+                data:{
+                    content: comment,
+                    userId: prismaUser?.id,
+                    postId
+                }
             })
             res.status(200).json(result)
         } catch (err) {
-            res.status(403).json({err: 'Error has occurred whilst making a post'})
+            res.status(403).json({err: 'Error has occurred whilst submitting a comment'})
         }
     }
 }

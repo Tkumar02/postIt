@@ -3,7 +3,7 @@ import AddPost from './components/AddPost'
 import DisplayPosts from './components/DisplayPosts'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
-import { PostType } from './types/Posts'
+import { PostType } from './types/Post'
 
 //Fetch all posts
 const allPosts = async () => {
@@ -18,7 +18,7 @@ export default function Home() {
   })
   if(error) return error
   if (isLoading) return "Loading ..."
-  console.log(data)
+  //console.log(data,'main page')
   return (
     <main>
       <AddPost/>
